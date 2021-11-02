@@ -17,6 +17,34 @@ __double_leading_underscore
 
 __double_leading_and_trailing_underscore__
 Такой способ именования используется для специальных переменных или функций, таких как __init__ или __len__.
+ Магические методы представляют простой способ заставить объекты вести себя аналогично встроенным типам.
+ Это, в частности, позволяет стандартизировать поведение базовых операторов с экземплярами класса.
+ '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__',
+ '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__len__', '__lt__',
+ '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__',
+ '__str__', '__subclasshook__', '__weakref__'
 """
 
 print(__doc__)
+
+
+class A:
+    def __init__(self, name, *args):
+        self.name = name
+        self.__coords = args
+
+    def __repr__(self):  # для разработчика
+        return f"{self.__class__}: {self.name}"
+
+    def __str__(self):  # для пользователя
+        return f"{self.name}"
+
+    def __len__(self):
+        return len(self.__coords)
+
+
+a = A('myname', 1, 2, 3, 40)
+
+print(a, len(a))
+print(dir(a))
+print(dir(A))
